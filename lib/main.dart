@@ -14,7 +14,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       color: Colors.black,
-      home: Home(),
+      home: Mobile(),
     );
   }
 }
@@ -36,20 +36,100 @@ TextStyle text = GoogleFonts.raleway(
     fontWeight: FontWeight.w300,
     fontSize: 25);
 
-class Home extends StatelessWidget {
-  const Home({
+final achivements = GlobalKey();
+final contact = GlobalKey();
+
+late BuildContext achiveContext;
+
+class Mobile extends StatefulWidget {
+  const Mobile({
     Key? key,
   }) : super(key: key);
 
   @override
+  State<Mobile> createState() => _MobileState();
+}
+
+class _MobileState extends State<Mobile> {
+  @override
   Widget build(BuildContext context) {
+    @override
+    void initState() {
+      super.initState();
+    }
+
     Size size = MediaQuery.of(context).size;
     double height = size.height / 100;
     double width = size.width / 100;
-    
+
     return Scaffold(
       extendBodyBehindAppBar: true,
       backgroundColor: Colors.black,
+      appBar: size.width < 1300? AppBar(
+        backgroundColor: Color.fromARGB(255, 15, 15, 15),
+        centerTitle: true,
+        title: Text(
+          'CodeOguz',
+          style: h3,
+        ),
+        
+      ):null,
+      drawer: size.width < 1300? Drawer(
+        backgroundColor: Color.fromARGB(255, 15, 15, 15),
+        child: Column(
+          children: [
+            SizedBox(height: 20,),
+            Container(
+                  padding: EdgeInsets.all(5),
+                  margin: EdgeInsets.symmetric(horizontal: 10),
+                  child: GestureDetector(
+                    onTap: () {},
+                    child: Text(
+                      'CodeOguz',
+                      style: h3,
+                    ),
+                  ),
+                ),
+            Container(
+                  padding: EdgeInsets.all(5),
+                  margin: EdgeInsets.symmetric(horizontal: 10),
+                  child: GestureDetector(
+                    onTap: () {},
+                    child: Text(
+                      'Who I Am',
+                      style: primary,
+                    ),
+                  ),
+                ),
+                Container(
+                  padding: EdgeInsets.all(5),
+                  margin: EdgeInsets.symmetric(horizontal: 10),
+                  child: GestureDetector(
+                    onTap: () {
+                      Scrollable.ensureVisible(achivements.currentContext!);
+                    },
+                    child: Text(
+                      'Achivements',
+                      style: primary,
+                    ),
+                  ),
+                ),
+                Container(
+                  padding: EdgeInsets.all(5),
+                  margin: EdgeInsets.symmetric(horizontal: 10),
+                  child: GestureDetector(
+                    onTap: () {
+                      Scrollable.ensureVisible(achivements.currentContext!);
+                    },
+                    child: Text(
+                      'Contact',
+                      style: primary,
+                    ),
+                  ),
+                ),
+          ],
+        ),
+      ): null,
       body: Stack(
         children: [
           Positioned(
@@ -93,7 +173,7 @@ class Home extends StatelessWidget {
                   child: Column(
                     children: [
                       Container(
-                        width: size.width> 1300 ? width * 40 : width * 80,
+                        width: size.width > 1300 ? width * 40 : width * 80,
                         margin: EdgeInsets.all(5),
                         child: Text(
                           '''English''',
@@ -102,7 +182,7 @@ class Home extends StatelessWidget {
                         ),
                       ),
                       Container(
-                        width: size.width> 1300 ? width * 40 : width * 80,
+                        width: size.width > 1300 ? width * 40 : width * 80,
                         margin: EdgeInsets.all(5),
                         child: Text(
                           '''I learnt English when I was preparation class in high school. That led me to watch English content on the internet which expanded my vision. \n\n''' +
@@ -120,7 +200,7 @@ class Home extends StatelessWidget {
                   child: Column(
                     children: [
                       Container(
-                        width: size.width> 1300 ? width * 40 : width * 80,
+                        width: size.width > 1300 ? width * 40 : width * 80,
                         margin: EdgeInsets.all(5),
                         child: Text(
                           '''Programming''',
@@ -129,7 +209,7 @@ class Home extends StatelessWidget {
                         ),
                       ),
                       Container(
-                        width: size.width> 1300 ? width * 40 : width * 80,
+                        width: size.width > 1300 ? width * 40 : width * 80,
                         margin: EdgeInsets.all(5),
                         child: Text(
                           '''I got introduced to programming in the last quarter of 2020, and made some entry level apps with Java [One of My Apps]. \n\n''' +
@@ -170,33 +250,51 @@ class Home extends StatelessWidget {
                                     fontWeight: FontWeight.w400,
                                     fontStyle: FontStyle.italic,
                                     fontSize: width * 1 + 25)),
-                            Row(children: [
-                              Container(
-                                margin: EdgeInsets.all(width*1),
-                                child: InkWell(
-                                  onTap: (){
-                                    launch('https:/github.com/codeoguz');
-                                  },
-                                  child: SvgPicture.asset('../res/github.svg', height: size.width > 1300? width*4: width*10,)),
-                              ),
-                              Container(
-                                margin: EdgeInsets.all(width*1),
-                                child: InkWell(
-                                  onTap: (){
-                                    launch('https://www.youtube.com/channel/UCTMJ7LfXp4g6Gbxnt0FZs4g');
-                                  },
-                                  child: SvgPicture.asset('../res/youtube.svg', height: size.width > 1300? width*4: width*10,)),
-                              ),
-                              Container(
-                                margin: EdgeInsets.all(width*1),
-                                child: InkWell(
-                                  onTap: (){
-                                    launch('https:/instagram.com/doguzkaan');
-                                  },
-                                  child: SvgPicture.asset('../res/instagram.svg', height: size.width > 1300? width*4: width*10,)),
-                              ),
-
-                            ],)
+                            Row(
+                              children: [
+                                Container(
+                                  margin: EdgeInsets.all(width * 1),
+                                  child: InkWell(
+                                      onTap: () {
+                                        launch('https:/github.com/codeoguz');
+                                      },
+                                      child: SvgPicture.asset(
+                                        '../res/github.svg',
+                                        height: size.width > 1300
+                                            ? width * 4
+                                            : width * 10,
+                                      )),
+                                ),
+                                Container(
+                                  margin: EdgeInsets.all(width * 1),
+                                  child: InkWell(
+                                      onTap: () {
+                                        launch(
+                                            'https://www.youtube.com/channel/UCTMJ7LfXp4g6Gbxnt0FZs4g');
+                                      },
+                                      child: SvgPicture.asset(
+                                        '../res/youtube.svg',
+                                        height: size.width > 1300
+                                            ? width * 4
+                                            : width * 10,
+                                      )),
+                                ),
+                                Container(
+                                  margin: EdgeInsets.all(width * 1),
+                                  child: InkWell(
+                                      onTap: () {
+                                        launch(
+                                            'https:/instagram.com/doguzkaan');
+                                      },
+                                      child: SvgPicture.asset(
+                                        '../res/instagram.svg',
+                                        height: size.width > 1300
+                                            ? width * 4
+                                            : width * 10,
+                                      )),
+                                ),
+                              ],
+                            )
                           ],
                         ),
                       )
@@ -204,7 +302,7 @@ class Home extends StatelessWidget {
                   ),
                 ),
 
-                 /*-----Achivements-----*/
+                /*-----Achivements-----*/
                 Column(
                   children: [
                     Container(
@@ -215,8 +313,9 @@ class Home extends StatelessWidget {
                       ),
                     ),
                     Container(
-                      width: width*70,
-                      margin: EdgeInsets.symmetric(horizontal: width * 10),
+                      width: size.width > 1300? width * 70: width*90,
+                      margin: EdgeInsets.symmetric(
+                          horizontal: width, vertical: width * 2),
                       alignment: Alignment.center,
                       child: Column(
                         children: [
@@ -224,7 +323,7 @@ class Home extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               SizedBox(
-                                width: width > 1300? width * 15: width*25,
+                                width: size.width > 1300 ? width * 15 : width * 45,
                                 child: ClipRRect(
                                   borderRadius: BorderRadius.circular(5.0),
                                   child: Image.asset(
@@ -234,7 +333,7 @@ class Home extends StatelessWidget {
                                 ),
                               ),
                               Container(
-                                  width: width > 1300? width * 30: width*45,
+                                  width: size.width > 1300 ? width * 30 : width * 45,
                                   child: Text(
                                     '''I joined WeBoost hackathon and we became the 4th in the competition.''',
                                     style: h3,
@@ -245,15 +344,60 @@ class Home extends StatelessWidget {
                         ],
                       ),
                     ),
+                    Container(
+                      width: size.width > 1300? width * 70: width*90,
+                      margin: EdgeInsets.symmetric(
+                          horizontal: width, vertical: width * 2),
+                      alignment: Alignment.center,
+                      child: Column(
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Container(
+                                  width: size.width > 1300 ? width * 30 : width * 45,
+                                  child: Text(
+                                    '''I am the developer of FlipCard. And, I am working on something bigger now...''',
+                                    style: h3,
+                                    maxLines: null,
+                                  )),
+                              Container(
+                                height: size.width > 1300 ? width * 15 : width * 45,
+                                width: size.width > 1300 ? width * 15 : width * 45,
+                                padding: EdgeInsets.all(width*5),
+                                child: SvgPicture.asset(
+                                    '../res/flipcard.svg',
+                                    fit: BoxFit.scaleDown,
+                                  ),
+                              ),
+                              
+                            ],
+                          )
+                        ],
+                      ),
+                    ),
                   ],
                 ),
                 SizedBox(
-                  height: width * 20,
+                  height: width * 5,
+                ),
+                Container(
+                  alignment: Alignment.center,
+                  width: width*100,
+                  padding: EdgeInsets.symmetric(vertical: width*10),
+                  color: Colors.white,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text('Contact', style: GoogleFonts.roboto(color: Colors.black, fontSize: 50, fontStyle: FontStyle.italic, fontWeight: FontWeight.w600),),
+                      Text('oguz@codeoguz.xyz', style: GoogleFonts.roboto(color: Colors.black, fontSize: 40, fontStyle: FontStyle.italic, fontWeight: FontWeight.w400),)
+                    ],
+                  ),
                 )
               ],
             ),
           )),
-          Container(
+          size.width > 1300 ? Container(
             height: height * 7,
             color: Color.fromARGB(255, 15, 15, 15),
             child: Row(
@@ -285,16 +429,19 @@ class Home extends StatelessWidget {
                   padding: EdgeInsets.all(5),
                   margin: EdgeInsets.symmetric(horizontal: 10),
                   child: GestureDetector(
-                    onTap: () {},
+                    onTap: () {
+                      Scrollable.ensureVisible(achivements.currentContext!);
+                    },
                     child: Text(
                       'Achivements',
                       style: primary,
                     ),
                   ),
                 ),
+                
               ],
             ),
-          ),
+          ): SizedBox(),
         ],
       ),
     );

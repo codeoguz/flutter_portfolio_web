@@ -1,6 +1,7 @@
 # To Do
 
 - [x] Who I am section
-- [ ] Achivements section
-- [ ] Make navbar responsive
-- [ ] Make navbar functional 
+- [x] Achivements section
+- [x] Make navbar responsive
+- [x] Make navbar functional 
+- [x] Create a footer
